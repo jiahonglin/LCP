@@ -1,2 +1,2 @@
 # LCP
-for temp repo
+repo init
