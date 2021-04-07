@@ -11,6 +11,23 @@
 class Solution {
 public:
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode *dummy = new ListNode(-1);
+        ListNode *cur = dummy;
+        int carry=0;
+        while(l1 || l2){
+            int val1 = l1?l1->val:0;
+            int val2 = l2?l2->val:0;
+            int sum = val1 + val2 + carry;
+            carry = sum/10;
+            cur->next = new ListNode(sum%10);
+            if(l1)l1=l1->next;
+            if(l2)l2=l2->next;
+            cur=cur->next;
+        }
+        if(carry) cur->next=new ListNode(1);
+        return dummy->next;
+
+        /*
         ListNode *seq1 = l1;
         ListNode *seq2 = l2;
         ListNode *longlist, *shortlist;
@@ -79,5 +96,7 @@ public:
             pre->next = tmp;
         }
         return longlist;
+        */
     }
 };
+
