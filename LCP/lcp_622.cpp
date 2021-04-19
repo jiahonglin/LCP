@@ -1,63 +1,48 @@
 class MyCircularQueue {
 private:
-    int head=0,tail=0;
+    int head=0,tail=0,cnt=0;
     int maxsize;
     vector<int> myqueue;
 public:
     MyCircularQueue(int k) {
-        for(int i=0;i<k;i++) myqueue.push_back(-1);
+        myqueue.resize(k);
+        head = k-1;
+        tail = 0;
+        cnt=0;
         maxsize=k;
     }
     
     bool enQueue(int value) {
-        bool ret=false;
-        if(myqueue[tail] == -1){
-            myqueue[tail] = value;
-            ret = true;
-            ((tail+1)<maxsize)?tail++:tail=0;
-        }
-        return ret;
+        if(isFull()) return false;
+        myqueue[tail] = value;
+        cnt++;
+        tail = (tail+1)%maxsize;
+        return true;
     }
     
     bool deQueue() {
-        bool ret = false;
-        if(myqueue[head] != -1){
-            myqueue[head]=-1;
-            ret = true;
-            ((head+1)<maxsize)?head++:head=0;
-        }
-        return ret;
+        if(isEmpty()) return false;
+        cnt--;
+        head = (head+1)%maxsize;
+        return true;
     }
     
     int Front() {
-        return myqueue[head];
+        if(isEmpty()) return -1;
+        return myqueue[(head+1)%maxsize];
     }
     
     int Rear() {
-        if(tail-1<0){
-            return myqueue[maxsize-1];
-        }
-        else{
-            return myqueue[tail-1];
-        }
+        if(isEmpty()) return -1;
+        return myqueue[(tail-1+maxsize)%maxsize];
     }
     
     bool isEmpty() {
-        for(int i=0;i<maxsize;i++){
-            if(myqueue[i]!=-1){
-                return false;
-            }
-        }
-        return true;
+        return (cnt==0)?true:false;
     }
     
     bool isFull() {
-        for(int i=0;i<maxsize;i++){
-            if(myqueue[i]==-1){
-                return false;
-            }
-        }
-        return true;
+        return (cnt>=maxsize)?true:false;
     }
 };
 
