@@ -1,6 +1,6 @@
 class Solution {
 public:
-    /*Quick Sort*/
+    /*Quick Sort 1*/
     /*
     vector<int> sortArray(vector<int>& nums) {
         quickSort(nums,0,nums.size()-1);
@@ -30,8 +30,47 @@ public:
         return split;
     }
     */
+    /*Quick Sort 2*/
+    vector<int> sortArray(vector<int>& nums) {
+        /*
+        function<void(int, int)> quickSort = [&](int l, int r) {
+            if (l >= r) return;      
+            int i = l;
+            int j = r;
+            int p = nums[l + rand() % (r - l + 1)];
+            while (i <= j) {
+                while (nums[i] < p) ++i;
+                while (nums[j] > p) --j;
+                if (i <= j) swap(nums[i++], nums[j--]);
+            }
+            quickSort(l, j);
+            quickSort(i, r);
+        };
+        */
+        quickSort(nums,0, nums.size() - 1);
+        return nums;
+    }
+    void quickSort(vector<int>& nums, int left, int right){
+        if(left>=right) return;
+        int i = left;
+        int j = right;
+        int pivot = nums[left+rand()%(right-left+1)];
+        while(i<=j){
+            while(nums[i] < pivot) i++;
+            while(nums[j] > pivot) j--;
+            if(i<=j){
+                int tmp = nums[i];
+                nums[i] = nums[j];
+                nums[j] = tmp;
+                i++;j--;
+            }
+        }
+        quickSort(nums,left,j);
+        quickSort(nums,i,right);
+    }
+
     /*Merge Sort*/
-    
+    /*
     vector<int> sortArray(vector<int>& nums) {
         if(nums.size()<=1) return nums;
         int pivot = (nums.size()+1)/2;
@@ -59,5 +98,5 @@ public:
         while(rightPivot<right.size()) ret.push_back(right[rightPivot++]);
         return ret;
     }
-    
+    */
 };
