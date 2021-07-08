@@ -9,60 +9,37 @@
  */
 class Solution {
 public:
+    
+    /*Recursive*/
     vector<vector<int>> levelOrder(TreeNode* root) {
-        map<TreeNode*, int> NodeMap;
-        TreeNode* cur;
-        int level = 0;
-        queue<TreeNode*> NodeQueue,NodeQueue2;
         vector<vector<int>> sol;
-        if(root)
-        {
-            NodeQueue.push(root);
-            NodeMap.insert(pair<TreeNode*, int>(root, level));
-        }
-        else
-        {
-            return sol;
-        }
-        while(NodeQueue.empty() == false)
-        {
-            cur = NodeQueue.front();
-            NodeQueue.pop();
-            NodeQueue2.push(cur);
-            int tmplevel = NodeMap[cur] + 1;
-            level = (level>tmplevel?level:tmplevel);
-            if(cur->left)
-            {
-                NodeMap.insert(pair<TreeNode*, int>(cur->left, tmplevel));
-                NodeQueue.push(cur->left);
-            }
-            if(cur->right)
-            {
-                NodeMap.insert(pair<TreeNode*, int>(cur->right, tmplevel));
-                NodeQueue.push(cur->right);
-            }
-        }
- 
-	int nowLevel = 0;
-        vector<int>tmpsol;
-        while(NodeQueue2.empty() == false)
-        {
-            TreeNode* tmp  = NodeQueue2.front();
-            NodeQueue2.pop();
-            if(nowLevel >= NodeMap[tmp])
-            {
-                tmpsol.push_back(tmp->val);
-            }
-            else
-            {
-                sol.push_back(tmpsol);
-                tmpsol.clear();
-                tmpsol.push_back(tmp->val);
-                nowLevel = NodeMap[tmp];
-            }
-        }
-        if(tmpsol.empty() == false)
-            sol.push_back(tmpsol);
+        levelOrder(root,0,sol);
         return sol;
     }
+    void levelOrder(TreeNode* node, int level, vector<vector<int>>& sol){
+        if(!node) return;
+        if(sol.size() == level) sol.push_back({});
+        sol[level].push_back(node->val);
+        if(node->left) levelOrder(node->left,level+1,sol);
+        if(node->right) levelOrder(node->right,level+1,sol);
+    }
+    /*Iterative*/
+    /*
+    vector<vector<int>> levelOrder(TreeNode* root) {
+        if(!root) return{};
+        queue<TreeNode*> q{{root}};
+        vector<vector<int>> sol;
+        while(!q.empty()){
+            vector<int> levelElem;
+            for(int i=q.size();i>0;i--){
+                TreeNode* t = q.front(); q.pop();
+                levelElem.push_back(t->val);
+                if(t->left) q.push(t->left);
+                if(t->right) q.push(t->right);
+            }
+            sol.push_back(levelElem);
+        }
+        return sol;
+    }
+    */
 };
