@@ -11,7 +11,7 @@ public:
         return sol;
     }
     void doPermute(vector<int>& nums, int start, set<vector<int>>& s){
-        if(start < nums.size()){
+        if(start >= nums.size()){
             s.insert(nums);
         }
         for(int i=start;i<nums.size();i++){
