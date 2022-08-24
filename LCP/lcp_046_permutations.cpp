@@ -1,5 +1,6 @@
 class Solution {
 public:
+/*
     vector<vector<int>> permute(vector<int>& nums) {
         vector<vector<int>> sol;
         vector<int> out;
@@ -20,6 +21,23 @@ public:
                 out.pop_back();
                 visited[i]=0;
             }
+        }
+    }
+ */
+    vector<vector<int>> permute(vector<int>& nums) {
+        vector<vector<int>> sol;
+        helper(nums,0,sol);
+        return sol;
+    }
+    void helper(vector<int>& nums, int pos, vector<vector<int>>& sol){
+        if(pos >= nums.size()){
+            sol.push_back(nums);
+            return;
+        }
+        for(int i=pos ; i<nums.size() ; i++){
+            swap(nums[pos],nums[i]);
+            helper(nums,pos+1,sol);
+            swap(nums[i],nums[pos]);
         }
     }
 };
