@@ -1,6 +1,21 @@
 class Solution {
 public:
     vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        vector<vector<int>> sol;
+        int i=0, n=intervals.size();
+        while(i < n && intervals[i][1] < newInterval[0]) sol.push_back(intervals[i++]);
+        vector<int> in = newInterval;
+        while(i<n && intervals[i][0] <= in[1]){
+            in[0] = min(intervals[i][0],in[0]);
+            in[1] = max(intervals[i][1],in[1]);
+            i++;
+        }
+        sol.push_back(in);
+        while(i<n) sol.push_back(intervals[i++]);
+        return sol;
+    }
+/*
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
         map<int,int> s;
         for(int i=0;i<intervals.size();i++){
             s[intervals[i][0]]++;
@@ -25,5 +40,5 @@ public:
         }
         return sol;
     }
-
+*/
 };
