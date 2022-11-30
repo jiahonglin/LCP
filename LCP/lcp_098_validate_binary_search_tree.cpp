@@ -43,6 +43,14 @@ public:
         inorderVec.push_back(nd->val);
         isValidBST(nd->right, inorderVec);
     }
-    
+    /*Method 3*/ 
+    bool isValidBST(TreeNode* root) {
+        return isValidBST(root,LONG_MIN,LONG_MAX);
+    }
+    bool isValidBST(TreeNode* node, long int low, long int high){
+        if(!node) return true;
+        if(node->val <= low || node->val >= high) return false;
+        return isValidBST(node->left, low, node->val) && isValidBST(node->right, node->val, high);
+    }
     
 };
