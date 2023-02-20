@@ -11,6 +11,26 @@
 class Solution {
 public:
     void reorderList(ListNode* head) {
+        stack<ListNode*> s;
+        ListNode* cur = head;
+        int sz=0;
+        while(cur){
+            sz++;
+            s.push(cur);
+            cur=cur->next;
+        }
+        cur = head;
+        for(int i=0;i<sz/2;i++){
+            ListNode* elem = s.top(); s.pop();
+            elem->next = cur->next;
+            cur->next = elem;
+            cur = cur->next->next;
+        }
+        cur->next=NULL;
+
+    }
+    /*
+    void reorderList(ListNode* head) {
         if(!head) return;
 
         ListNode *tmp=head, *half=head, *prev=NULL;
@@ -44,4 +64,5 @@ public:
 
         if (head && head->next) head->next->next = NULL;
     }
+    */
 };
