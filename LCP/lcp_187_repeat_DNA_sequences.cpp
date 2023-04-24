@@ -1,5 +1,6 @@
 class Solution {
 public:
+/*
     vector<string> findRepeatedDnaSequences(string s) {
         if(s.length() <= 10) return {};
         vector<string> sol;
@@ -14,5 +15,23 @@ public:
             }
         }
         return sol;
+    }
+*/
+    vector<string> findRepeatedDnaSequences(string s) {
+        if(s.length()< 10) return {};
+        set<string> ss;
+        vector<string> ans;
+        for(int i=0;i<=s.length()-10;i++){
+            string tmp = s.substr(i,10);
+            if(ss.count(tmp) == 0){
+                ss.insert(tmp);
+            }
+            else{
+                //vector<string>::iterator it = find(ans.begin(),ans.end(),tmp);
+                if(find(ans.begin(),ans.end(),tmp) == ans.end())
+                    ans.push_back(tmp);
+            }
+        }
+        return ans;
     }
 };
