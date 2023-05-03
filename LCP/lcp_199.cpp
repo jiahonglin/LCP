@@ -11,6 +11,7 @@
  */
 class Solution {
 public:
+    /*
     vector<int> rightSideView(TreeNode* root) {
         if(!root) return {};
         queue<TreeNode*> q;
@@ -27,5 +28,23 @@ public:
             sol.push_back(levelNode.back());
         }
         return sol;
+    }
+    */
+    vector<int> rightSideView(TreeNode* root) {
+        if(!root) return {};
+        queue<TreeNode*> q;
+        vector<int> ans;
+        q.push(root);
+        while(!q.empty()){
+            int sz = q.size();
+            TreeNode* t;
+            for(int i=0;i<sz;i++){
+                t = q.front();q.pop();
+                if(t->left) q.push(t->left);
+                if(t->right) q.push(t->right);
+            }
+            ans.push_back(t->val);
+        }
+        return ans;
     }
 };
