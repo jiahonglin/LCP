@@ -1,20 +1,36 @@
 class Solution {
 public:
-    int countPrimes(int n) {
 
-        if(n<=2) return 0;
-        vector<int> nums(n,0);
-        int cnt=0;
+    int countPrimes(int n) {
+        int sol = 0;
+        vector<bool> primes(n,true);
+        for(int i=2;i<=sqrt(n);i++){
+            for(int j=2*i;j<n;j=j+i){
+                primes[j] = false;
+            }
+        }
+        for(int k=2;k<n;k++){
+            if(primes[k]) sol++;
+        }
+        return sol;
+    }
+    
+    /*
+    int countPrimes(int n) {
+        int sol = 0;
+        vector<bool> primes(n,true);
+
         for(int i=2;i<n;i++){
-            if(nums[i]==0) cnt++;
+            if(primes[i]) sol++;
             else continue;
             if(i*2 < n){
                 for(int j=i*2;j<n;j=j+i){
-                    nums[j]=1;
-                }   
+                    primes[j]=false;
+                }
             }
         }
-        return cnt;
+        return sol;
     }
+    */
 
 };
