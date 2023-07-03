@@ -12,14 +12,14 @@
 class Solution {
 public:
     int kthSmallest(TreeNode* root, int k) {
-        vector<int> nums;
-        preOrder(root,nums);
-        return nums[k-1];
+        vector<int> nodelist;
+        inorderTraverse(root,nodelist);
+        return nodelist[k-1];
     }
-    void preOrder(TreeNode* root, vector<int>& nums){
+    void inorderTraverse(TreeNode* root, vector<int>& nodelist){
         if(!root) return;
-        preOrder(root->left,nums);
-        nums.push_back(root->val);
-        preOrder(root->right,nums);
+        inorderTraverse(root->left,nodelist);
+        nodelist.push_back(root->val);
+        inorderTraverse(root->right,nodelist);
     }
 };
