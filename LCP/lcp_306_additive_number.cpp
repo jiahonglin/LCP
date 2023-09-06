@@ -1,6 +1,31 @@
 class Solution {
 public:
     bool isAdditiveNumber(string num) {
+        for(int i=1;i<num.length();i++){
+            string s1 = num.substr(0,i);
+            if(s1.length()>1 && s1[0]=='0') break;
+            for(int j=i+1;j<num.length();j++){
+                string s2 = num.substr(i,j-i);
+                if(s2.length()>1 && s2[0]=='0') continue;
+                long d1 = stol(s1);
+                long d2 = stol(s2);
+                long next = d1+d2;
+                string nextstr = to_string(next);
+                string allstr = s1+s2+nextstr;
+                while(allstr.length()<num.length()){
+                    d1 = d2;
+                    d2 = next;
+                    next = d1+d2;
+                    nextstr = to_string(next);
+                    allstr+=nextstr;
+                }
+                if(allstr == num) return true;
+            }
+        }
+        return false;
+    }
+/*
+    bool isAdditiveNumber(string num) {
         for(int i = 1; i<= num.size()/2; i++){
             for(int j = 1; j<= (num.size()-i)/2 ;j++){
                 if( check(num.substr(0,i), num.substr(i,j), num.substr(i+j)) ) return true;
@@ -29,4 +54,5 @@ public:
         reverse(res.begin(), res.end());
         return res;
     }
+    */
 };
