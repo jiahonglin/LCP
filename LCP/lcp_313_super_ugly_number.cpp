@@ -1,6 +1,30 @@
 class Solution {
 public:
     int nthSuperUglyNumber(int n, vector<int>& primes) {
+        if(n==1) return 1;
+        vector<int> dp;
+        vector<int> cnt(primes.size(),0);
+        dp.push_back(1);
+        while(dp.size() < n){
+            vector<long long int> tmp(primes.size(),0);
+            for(int i=0;i<primes.size();i++){
+                tmp[i]=(long long int)primes[i]*dp[cnt[i]];
+            }
+            int minimum = INT_MAX;
+            for(int i=0;i<primes.size();i++){
+                if(tmp[i] < minimum){
+                    minimum = tmp[i];
+                }
+            }
+            for(int i=0;i<primes.size();i++){
+                if(tmp[i]==minimum) cnt[i]++;
+            }
+            dp.push_back(minimum);
+        }
+        return dp.back();
+    }
+    /*
+    int nthSuperUglyNumber(int n, vector<int>& primes) {
         vector<int> dp(n);
         if(n==1) return 1;
         dp[0]=1;
@@ -20,26 +44,6 @@ public:
             dp[j]=mm;
         }
         return dp[n-1];
-        /*
-        vector<int> uglyList;
-        vector<int> facList(primes.size(),0);
-        uglyList.push_back(1);
-        while(uglyList.size() < n){
-            vector<int> tmp;
-            for(int i=0;i<primes.size();i++){
-                tmp.push_back(uglyList[facList[i]]*primes[i]);
-            }
-            int minVal = INT_MAX;
-            int minIdx = 0;
-            for(int i=0;i<primes.size();i++){
-                minVal = min(minVal,tmp[i]);
-            }
-            for(int i=0;i<primes.size();i++){
-                if(tmp[i] == minVal) facList[i]++;
-            }
-            uglyList.push_back(minVal);
-        }
-        return uglyList.back();
-        */
     }
+    */
 };
